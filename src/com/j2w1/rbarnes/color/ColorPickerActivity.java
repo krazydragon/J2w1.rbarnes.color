@@ -10,18 +10,25 @@
 package com.j2w1.rbarnes.color;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
-public class ColorPickerActivity extends Activity implements SeekBar.OnSeekBarChangeListener{
+public class ColorPickerActivity extends Activity implements SeekBar.OnSeekBarChangeListener, OnClickListener{
 	
 	
 	
 	static int _redInt;
 	static int _greenInt;
 	static int _blueInt;
+	TextView _colorTextView;
+	Intent _nameIntent;
 
     
     @Override
@@ -29,19 +36,25 @@ public class ColorPickerActivity extends Activity implements SeekBar.OnSeekBarCh
         super.onCreate(savedInstanceState);
         setContentView(R.layout.picker);
 
-        SeekBar redBar=(SeekBar)findViewById(R.id.RedBar);
-        SeekBar greenBar=(SeekBar)findViewById(R.id.GreenBar);
-        SeekBar blueBar=(SeekBar)findViewById(R.id.BlueBar);
+        _colorTextView=(TextView)findViewById(R.id.ColorView1);
+        _nameIntent = getIntent();
+        SeekBar redBar = (SeekBar)findViewById(R.id.RedBar);
+        SeekBar greenBar = (SeekBar)findViewById(R.id.GreenBar);
+        SeekBar blueBar = (SeekBar)findViewById(R.id.BlueBar);
+        Button saveButton = (Button)findViewById(R.id.SaveButton);
+        Button webButton = (Button)findViewById(R.id.WebButton);
         
-        
-        _redInt = 0;
-        _greenInt = 0;
-        _blueInt = 0;
+        _redInt = 255;
+        _greenInt = 255;
+        _blueInt = 255;
+        _colorTextView.setBackgroundColor(Color.rgb(_redInt, _greenInt, _blueInt));
         
         
         redBar.setOnSeekBarChangeListener(this);
         blueBar.setOnSeekBarChangeListener(this);
         greenBar.setOnSeekBarChangeListener(this);
+        saveButton.setOnClickListener(this);
+        webButton.setOnClickListener(this);
     }
     
 	@Override
@@ -52,7 +65,7 @@ public class ColorPickerActivity extends Activity implements SeekBar.OnSeekBarCh
 		TextView redBarText =(TextView)findViewById(R.id.RedBarText);
 		TextView greenBarText=(TextView)findViewById(R.id.GreenBarText);
 		TextView blueBarText=(TextView)findViewById(R.id.BlueBarText);
-		TextView colorTextView=(TextView)findViewById(R.id.ColorView1);
+		
 		
 		switch(seekBar.getId()){
 		
@@ -73,7 +86,7 @@ public class ColorPickerActivity extends Activity implements SeekBar.OnSeekBarCh
 			break;
 		}
 		
-		colorTextView.setBackgroundColor(Color.rgb(_redInt, _greenInt, _blueInt));
+		_colorTextView.setBackgroundColor(Color.rgb(_redInt, _greenInt, _blueInt));
 	}
 
 	@Override
@@ -91,4 +104,26 @@ public class ColorPickerActivity extends Activity implements SeekBar.OnSeekBarCh
 		
 	}
 
-}
+	@Override
+	public void onClick(View v) {
+		switch(v.getId()){
+		
+		
+		case R.id.SaveButton:
+			_nameIntent.putExtra("redInfo", _redInt);
+			_nameIntent.putExtra("greenInfo",_greenInt);
+			_nameIntent.putExtra("blueInfo",_blueInt);
+			 setResult(RESULT_OK, _nameIntent);
+			 finish();
+
+					
+			break;
+		case R.id.WebButton:
+			Uri uriUrl = Uri.parse("http://cloford.com/resources/colours/500col.htm");
+			Intent launchBrowser = new Intent(Intent.ACTION_VIEW, uriUrl); 
+			startActivity(launchBrowser); 
+			break;
+		
+	}
+
+}}

@@ -14,6 +14,7 @@ package com.j2w1.rbarnes.color;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
@@ -34,18 +35,10 @@ public class ColorMainActivity extends Activity {
 		pickButton.setOnClickListener(new Button.OnClickListener() {  
 		@Override
 		public void onClick(View v) {
-			startActivity(pickerIntent);
+			startActivityForResult(pickerIntent,0);
 			
 		}
         });
-		
-		
-		
-		
-		
-		
-		
-		
 		
 		
 	}
@@ -55,6 +48,24 @@ public class ColorMainActivity extends Activity {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.color_main, menu);
 		return true;
+	}
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+	  if (resultCode == RESULT_OK && requestCode == 0) {
+		  super.onActivityResult(requestCode, resultCode, data);
+		  if(data.getExtras().containsKey("redInfo")){
+			  
+			  View view = (View)findViewById(R.id.MainLayout);
+			  view.setBackgroundColor(Color.rgb(data.getIntExtra("redInfo", 0), data.getIntExtra("greenInfo", 0), data.getIntExtra("blueInfo", 0)));
+			  
+			  //width.setText(data.getStringExtra("widthInfo"));
+
+			   
+
+			          }
+
+	  }
 	}
 
 }
