@@ -18,6 +18,7 @@ import android.graphics.Color;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 
 public class ColorMainActivity extends Activity {
 	
@@ -35,7 +36,22 @@ public class ColorMainActivity extends Activity {
 		pickButton.setOnClickListener(new Button.OnClickListener() {  
 		@Override
 		public void onClick(View v) {
-			startActivityForResult(pickerIntent,0);
+			
+			EditText colorField   = (EditText)findViewById(R.id.color_input_field);
+			String colorText = colorField.getText().toString();
+			
+			if(colorText.matches(""))
+			{
+				
+			}
+			else
+			{
+				pickerIntent.putExtra("fav_color", colorText);
+				
+				
+				startActivityForResult(pickerIntent,0);
+			}
+			
 			
 		}
         });
@@ -59,7 +75,7 @@ public class ColorMainActivity extends Activity {
 			  View view = (View)findViewById(R.id.MainLayout);
 			  view.setBackgroundColor(Color.rgb(data.getIntExtra("redInfo", 0), data.getIntExtra("greenInfo", 0), data.getIntExtra("blueInfo", 0)));
 			  
-			  //width.setText(data.getStringExtra("widthInfo"));
+			  
 
 			   
 
