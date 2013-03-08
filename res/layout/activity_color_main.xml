@@ -16,7 +16,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_alignRight="@+id/color_input_field"
-        android:layout_marginBottom="35dp"
+        android:layout_marginBottom="15dp"
+        android:layout_marginTop="10dp"
         android:text="@string/question"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
@@ -26,7 +27,9 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/textView1"
-        android:ems="10" >
+        android:ems="10"
+        android:hint="@string/green"
+        android:inputType="textWebEditText" >
 
         <requestFocus />
     </EditText>

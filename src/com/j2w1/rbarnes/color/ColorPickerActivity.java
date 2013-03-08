@@ -35,25 +35,26 @@ public class ColorPickerActivity extends Activity implements SeekBar.OnSeekBarCh
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_picker);
-
+        //grab color text view 
         _colorTextView=(TextView)findViewById(R.id.ColorView1);
-        _nameIntent = getIntent();
+        //Detect seek bars and buttons
         SeekBar redBar = (SeekBar)findViewById(R.id.RedBar);
         SeekBar greenBar = (SeekBar)findViewById(R.id.GreenBar);
         SeekBar blueBar = (SeekBar)findViewById(R.id.BlueBar);
         Button saveButton = (Button)findViewById(R.id.SaveButton);
         Button webButton = (Button)findViewById(R.id.WebButton);
+        //Get users favorite color and display
+        _nameIntent = getIntent();
         String favColor = _nameIntent.getStringExtra("fav_color");
-
-        
         _colorTextView.setText(favColor + " is your favorite color! You can customize the the background color by using the RGB sliders. To save please press the save button. For color ideas press the idea button. ");
         
+        //Set background color
         _redInt = 255;
         _greenInt = 255;
         _blueInt = 255;
         _colorTextView.setBackgroundColor(Color.rgb(_redInt, _greenInt, _blueInt));
         
-        
+        //detect user input
         redBar.setOnSeekBarChangeListener(this);
         blueBar.setOnSeekBarChangeListener(this);
         greenBar.setOnSeekBarChangeListener(this);
